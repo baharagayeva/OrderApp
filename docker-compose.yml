@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=orderdb;Username=postgres;Password=Admin123
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    container_name: pg-local
+    environment:
+      - POSTGRES_PASSWORD=Admin123
+      - POSTGRES_DB=orderdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

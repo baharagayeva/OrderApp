@@ -1,0 +1,10 @@
+bin/
+obj/
+.vs/
+.idea/
+*.user
+.git/
+.gitignore
+Dockerfiledocker build -t orderservice .
+docker-compose.yml
+README.md
