@@ -129,3 +129,4 @@ C:\Users\Microsol\RiderProjects\OrderService\OrderService\obj\Debug\net10.0\refi
 C:\Users\Microsol\RiderProjects\OrderService\OrderService\obj\Debug\net10.0\OrderService.pdb
 C:\Users\Microsol\RiderProjects\OrderService\OrderService\obj\Debug\net10.0\OrderService.genruntimeconfig.cache
 C:\Users\Microsol\RiderProjects\OrderService\OrderService\obj\Debug\net10.0\ref\OrderService.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService\obj\Debug\net10.0\OrderService.sourcelink.json

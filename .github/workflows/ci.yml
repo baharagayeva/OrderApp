@@ -22,3 +22,6 @@ jobs:
 
       - name: Build
         run: dotnet build OrderService/OrderService.csproj --no-restore -c Release
+
+      - name: Test
+        run: dotnet test OrderService.Tests/OrderService.Tests.csproj -c Release
