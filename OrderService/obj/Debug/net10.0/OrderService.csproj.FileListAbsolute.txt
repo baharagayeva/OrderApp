@@ -130,3 +130,12 @@ C:\Users\Microsol\RiderProjects\OrderService\OrderService\obj\Debug\net10.0\Orde
 C:\Users\Microsol\RiderProjects\OrderService\OrderService\obj\Debug\net10.0\OrderService.genruntimeconfig.cache
 C:\Users\Microsol\RiderProjects\OrderService\OrderService\obj\Debug\net10.0\ref\OrderService.dll
 C:\Users\Microsol\RiderProjects\OrderService\OrderService\obj\Debug\net10.0\OrderService.sourcelink.json
+C:\Users\Microsol\RiderProjects\OrderService\OrderService\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService\bin\Debug\net10.0\Microsoft.Bcl.Cryptography.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService\bin\Debug\net10.0\MassTransit.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService\bin\Debug\net10.0\MassTransit.Abstractions.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService\bin\Debug\net10.0\MassTransit.RabbitMqTransport.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService\bin\Debug\net10.0\RabbitMQ.Client.dll

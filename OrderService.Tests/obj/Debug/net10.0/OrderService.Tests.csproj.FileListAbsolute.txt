@@ -132,3 +132,12 @@ C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\obj\Debug\net10.
 C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\obj\Debug\net10.0\OrderService.Tests.pdb
 C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\obj\Debug\net10.0\OrderService.Tests.genruntimeconfig.cache
 C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\obj\Debug\net10.0\ref\OrderService.Tests.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.0\MassTransit.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.0\MassTransit.Abstractions.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.0\MassTransit.RabbitMqTransport.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.0\Microsoft.Bcl.Cryptography.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.0\RabbitMQ.Client.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll

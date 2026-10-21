@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OrderService.CQRS.Commands.Requests;
 using OrderService.CQRS.Queries.Requests;
@@ -7,6 +8,7 @@ namespace OrderService.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class OrderController(IMediator mediator) : ControllerBase
 {
    [HttpPost("CreateOrder")]

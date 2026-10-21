@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MassTransit;
+using Microsoft.EntityFrameworkCore;
+using Moq;
 using OrderService.Configurations;
 using OrderService.CQRS.Commands.Requests;
 using OrderService.CQRS.Handlers.CommandHandlers;
+using OrderService.Events;
 
 namespace OrderService.Tests;
 
@@ -21,7 +24,7 @@ public class CreateOrderHandlerTests
     {
         // Arrange
         await using var context = CreateInMemoryContext();
-        var handler = new CreateOrderHandler(context);
+        var handler = new CreateOrderHandler(context, new Mock<IPublishEndpoint>().Object);
         var request = new CreateOrderRequest(name: "Test Order", totalPrice: 100, discount: 10);
 
         // Act
@@ -41,7 +44,7 @@ public class CreateOrderHandlerTests
     {
         // Arrange
         await using var context = CreateInMemoryContext();
-        var handler = new CreateOrderHandler(context);
+        var handler = new CreateOrderHandler(context, new Mock<IPublishEndpoint>().Object);
         var request = new CreateOrderRequest(name: "Discounted Order", totalPrice: 200, discount: 50);
 
         // Act
@@ -52,5 +55,24 @@ public class CreateOrderHandlerTests
         Assert.NotNull(savedOrder);
         Assert.Equal(200, savedOrder!.TotalPrice);
         Assert.Equal(50, savedOrder.Discount);
+    }
+    
+    [Fact]
+    public async Task Handle_ShouldCreateOrder_AndPublishEvent()
+    {
+        // Arrange
+        await using var context = CreateInMemoryContext();
+        var publishMock = new Mock<IPublishEndpoint>();
+        var handler = new CreateOrderHandler(context, publishMock.Object);
+        var request = new CreateOrderRequest(name: "Test Order", totalPrice: 100, discount: 10);
+
+        // Act
+        var result = await handler.Handle(request, CancellationToken.None);
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        publishMock.Verify(
+            p => p.Publish(It.IsAny<OrderCreatedEvent>(), It.IsAny<CancellationToken>()),
+            Times.Once);
     }
 }
