@@ -49,6 +49,13 @@ builder.Services.AddAuthorization();
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<OrderCreatedConsumer>();
+    
+    x.AddEntityFrameworkOutbox<AppDbContext>(o =>
+    {
+        o.UsePostgres();                          // PostgreSQL üçün kilid sorğuları
+        o.UseBusOutbox();                         // Publish birbaşa RabbitMQ-ya yox, outbox-a yazır
+        o.QueryDelay = TimeSpan.FromSeconds(1);   // fon xidməti outbox-u saniyədə bir yoxlayır
+    });
 
     x.UsingRabbitMq((context, cfg) =>
     {

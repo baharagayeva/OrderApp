@@ -141,3 +141,4 @@ C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.
 C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.0\RabbitMQ.Client.dll
 C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Microsol\RiderProjects\OrderService\OrderService.Tests\bin\Debug\net10.0\MassTransit.EntityFrameworkCoreIntegration.dll

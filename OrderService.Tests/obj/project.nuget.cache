@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZgejQ+ppe00=",
+  "dgSpecHash": "6kZWgwI0zAM=",
   "success": true,
   "projectFilePath": "C:\\Users\\Microsol\\RiderProjects\\OrderService\\OrderService.Tests\\OrderService.Tests.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Microsol\\.nuget\\packages\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",
     "C:\\Users\\Microsol\\.nuget\\packages\\masstransit\\8.5.7\\masstransit.8.5.7.nupkg.sha512",
     "C:\\Users\\Microsol\\.nuget\\packages\\masstransit.abstractions\\8.5.7\\masstransit.abstractions.8.5.7.nupkg.sha512",
+    "C:\\Users\\Microsol\\.nuget\\packages\\masstransit.entityframeworkcore\\8.5.7\\masstransit.entityframeworkcore.8.5.7.nupkg.sha512",
     "C:\\Users\\Microsol\\.nuget\\packages\\masstransit.rabbitmq\\8.5.7\\masstransit.rabbitmq.8.5.7.nupkg.sha512",
     "C:\\Users\\Microsol\\.nuget\\packages\\mediatr\\14.2.0\\mediatr.14.2.0.nupkg.sha512",
     "C:\\Users\\Microsol\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",

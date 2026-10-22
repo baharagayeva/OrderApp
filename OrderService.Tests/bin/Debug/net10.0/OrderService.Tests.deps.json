@@ -48,6 +48,19 @@
           }
         }
       },
+      "MassTransit.EntityFrameworkCore/8.5.7": {
+        "dependencies": {
+          "MassTransit": "8.5.7",
+          "Microsoft.EntityFrameworkCore.Relational": "10.0.4",
+          "Microsoft.Extensions.Caching.Memory": "10.0.11"
+        },
+        "runtime": {
+          "lib/net10.0/MassTransit.EntityFrameworkCoreIntegration.dll": {
+            "assemblyVersion": "8.5.7.0",
+            "fileVersion": "8.5.7.0"
+          }
+        }
+      },
       "MassTransit.RabbitMQ/8.5.7": {
         "dependencies": {
           "MassTransit": "8.5.7",
@@ -731,6 +744,7 @@
       },
       "OrderService/1.0.0": {
         "dependencies": {
+          "MassTransit.EntityFrameworkCore": "8.5.7",
           "MassTransit.RabbitMQ": "8.5.7",
           "MediatR": "14.2.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.12",
@@ -774,6 +788,13 @@
       "sha512": "sha512-HdS4nzARrW34F+ftZpfykSEwmvEFD8Z+lRulwakt0YU9xg4IE3bUmbls15vuOxfC2YDtcr7y3+SQYzXx6fG/vA==",
       "path": "masstransit.abstractions/8.5.7",
       "hashPath": "masstransit.abstractions.8.5.7.nupkg.sha512"
+    },
+    "MassTransit.EntityFrameworkCore/8.5.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZOx5WseH83PXk/We2c0gWT8+4f0Z27kP0yU2mLq8CSlq9xa+Ke61exu7Th2wjgZCMGSjwtdHlBHMJNZnyQg1vA==",
+      "path": "masstransit.entityframeworkcore/8.5.7",
+      "hashPath": "masstransit.entityframeworkcore.8.5.7.nupkg.sha512"
     },
     "MassTransit.RabbitMQ/8.5.7": {
       "type": "package",

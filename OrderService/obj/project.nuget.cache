@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "DGaj9eZp0Sc=",
+  "dgSpecHash": "eiUhjd1niz8=",
   "success": true,
   "projectFilePath": "C:\\Users\\Microsol\\RiderProjects\\OrderService\\OrderService\\OrderService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Microsol\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Microsol\\.nuget\\packages\\masstransit\\8.5.7\\masstransit.8.5.7.nupkg.sha512",
     "C:\\Users\\Microsol\\.nuget\\packages\\masstransit.abstractions\\8.5.7\\masstransit.abstractions.8.5.7.nupkg.sha512",
+    "C:\\Users\\Microsol\\.nuget\\packages\\masstransit.entityframeworkcore\\8.5.7\\masstransit.entityframeworkcore.8.5.7.nupkg.sha512",
     "C:\\Users\\Microsol\\.nuget\\packages\\masstransit.rabbitmq\\8.5.7\\masstransit.rabbitmq.8.5.7.nupkg.sha512",
     "C:\\Users\\Microsol\\.nuget\\packages\\mediatr\\14.2.0\\mediatr.14.2.0.nupkg.sha512",
     "C:\\Users\\Microsol\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
