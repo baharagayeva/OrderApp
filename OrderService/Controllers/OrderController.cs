@@ -18,8 +18,8 @@ public class OrderController(IMediator mediator) : ControllerBase
    }
 
    [HttpGet("GetOrderById")]
-   public async Task<IActionResult> GetOrderById([FromQuery] GetOrderRequest request, CancellationToken ct)
+   public async Task<IActionResult> GetOrderById([FromQuery] GetOrderByIdRequest byIdRequest, CancellationToken ct)
    {
-      return Ok(await mediator.Send(request, ct));
+      return Ok(await mediator.Send(byIdRequest, ct));
    }
 }

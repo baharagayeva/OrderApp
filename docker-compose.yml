@@ -9,11 +9,14 @@ services:
       - RabbitMq__Host=rabbitmq
       - RabbitMq__Username=admin
       - RabbitMq__Password=Admin123
+      - ConnectionStrings__Redis=redis:6379
     depends_on:
       postgres:
         condition: service_started
       rabbitmq:
         condition: service_healthy
+      redis:
+        condition: service_started
 
   postgres:
     image: postgres:16
@@ -36,10 +39,16 @@ services:
       - "5672:5672"     # tətbiqlərin qoşulduğu port (AMQP)
       - "15672:15672"   # idarəetmə paneli (brauzer)
     healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
       interval: 10s
       timeout: 5s
       retries: 5
+      
+  redis:
+    image: redis:7
+    container_name: redis-local
+    ports:
+      - "6379:6379"
 
 volumes:
   pgdata:

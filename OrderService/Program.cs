@@ -49,12 +49,12 @@ builder.Services.AddAuthorization();
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<OrderCreatedConsumer>();
-    
+
     x.AddEntityFrameworkOutbox<AppDbContext>(o =>
     {
-        o.UsePostgres();                          // PostgreSQL üçün kilid sorğuları
-        o.UseBusOutbox();                         // Publish birbaşa RabbitMQ-ya yox, outbox-a yazır
-        o.QueryDelay = TimeSpan.FromSeconds(1);   // fon xidməti outbox-u saniyədə bir yoxlayır
+        o.UsePostgres(); // PostgreSQL üçün kilid sorğuları
+        o.UseBusOutbox(); // Publish birbaşa RabbitMQ-ya yox, outbox-a yazır
+        o.QueryDelay = TimeSpan.FromSeconds(1); // fon xidməti outbox-u saniyədə bir yoxlayır
     });
 
     x.UsingRabbitMq((context, cfg) =>
@@ -64,15 +64,21 @@ builder.Services.AddMassTransit(x =>
             h.Username(builder.Configuration["RabbitMq:Username"] ?? "admin");
             h.Password(builder.Configuration["RabbitMq:Password"] ?? "Admin123");
         });
-        
+
         cfg.UseMessageRetry(r =>
         {
-            r.Interval(3, TimeSpan.FromSeconds(2));   // 3 retry, aralarında 2 saniyə
-            r.Ignore<ArgumentException>();            // bu xəta retry olunmur, birbaşa _error-a gedir
+            r.Interval(3, TimeSpan.FromSeconds(2)); // 3 retry, aralarında 2 saniyə
+            r.Ignore<ArgumentException>(); // bu xəta retry olunmur, birbaşa _error-a gedir
         });
 
         cfg.ConfigureEndpoints(context); // consumer üçün queue-nu avtomatik qurur
     });
+});
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    options.InstanceName = "OrderService:"; // bütün açarların önünə prefiks əlavə olunur
 });
 
 var app = builder.Build();

@@ -1,8 +1,8 @@
 namespace OrderService.CQRS.Queries.Responses;
 
-public class GetOrderResponse(int orderId, string name, DateTime orderDate, decimal totalPrice, decimal discount)
+public class GetOrderByIdResponse(int orderId, string name, DateTime orderDate, decimal totalPrice, decimal discount)
 {
-    public GetOrderResponse() : this(-1, string.Empty, DateTime.MinValue, -1, -1)
+    public GetOrderByIdResponse() : this(-1, string.Empty, DateTime.MinValue, -1, -1)
     {
     }
 
