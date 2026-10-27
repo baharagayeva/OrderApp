@@ -6,16 +6,17 @@ An order management API built with **.NET 10** and **ASP.NET Core**. It uses CQR
 
 ## Tech stack
 
-| Area | Technologies |
-| --- | --- |
-| API | ASP.NET Core Web API (.NET 10), Swagger / OpenAPI |
+| Area         | Technologies |
+|--------------| --- |
+| API          | ASP.NET Core Web API (.NET 10), Swagger / OpenAPI |
 | Architecture | CQRS with MediatR |
-| Data | PostgreSQL 16, Entity Framework Core 10, migrations |
-| Messaging | RabbitMQ, MassTransit 8 (message retry, error queue, EF Core transactional outbox) |
-| Caching | Redis 7, `IDistributedCache` (cache-aside) |
-| Security | JWT bearer authentication |
-| DevOps | Multi-stage Dockerfile, Docker Compose, GitHub Actions CI |
-| Testing | xUnit, Moq, EF Core InMemory provider |
+| Data         | PostgreSQL 16, Entity Framework Core 10, migrations |
+| Messaging    | RabbitMQ, MassTransit 8 (message retry, error queue, EF Core transactional outbox) |
+| Caching      | Redis 7, `IDistributedCache` (cache-aside) |
+| Security     | JWT bearer authentication |
+| Logging      | Serilog, ProblemDetails |
+| DevOps       | Multi-stage Dockerfile, Docker Compose, GitHub Actions CI |
+| Testing      | xUnit, Moq, EF Core InMemory provider |
 
 ## Architecture
 
@@ -123,7 +124,6 @@ The tests use the EF Core InMemory provider and mock MassTransit's `IPublishEndp
 
 ## Possible next steps
 
-- Structured logging with Serilog and global exception handling with `ProblemDetails`
 - Consumer tests with the MassTransit test harness
 - Apply EF Core migrations automatically at startup in development
 - Update and delete endpoints with cache invalidation

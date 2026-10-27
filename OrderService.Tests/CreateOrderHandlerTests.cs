@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using OrderService.Configurations;
 using OrderService.CQRS.Commands.Requests;
@@ -20,13 +21,16 @@ public class CreateOrderHandlerTests
 
         return new AppDbContext(options);
     }
+    
+    private static CreateOrderHandler CreateHandler(AppDbContext context, IPublishEndpoint publishEndpoint) =>
+        new(context, publishEndpoint, NullLogger<CreateOrderHandler>.Instance);
 
     [Fact]
     public async Task Handle_ShouldCreateOrder_AndReturnSuccessResponse()
     {
         // Arrange
         await using var context = CreateInMemoryContext();
-        var handler = new CreateOrderHandler(context, new Mock<IPublishEndpoint>().Object);
+        var handler = CreateHandler(context, new Mock<IPublishEndpoint>().Object);
         var request = new CreateOrderRequest(name: "Test Order", totalPrice: 100, discount: 10);
 
         // Act
@@ -46,7 +50,7 @@ public class CreateOrderHandlerTests
     {
         // Arrange
         await using var context = CreateInMemoryContext();
-        var handler = new CreateOrderHandler(context, new Mock<IPublishEndpoint>().Object);
+        var handler = CreateHandler(context, new Mock<IPublishEndpoint>().Object);
         var request = new CreateOrderRequest(name: "Discounted Order", totalPrice: 200, discount: 50);
 
         // Act
@@ -65,7 +69,7 @@ public class CreateOrderHandlerTests
         // Arrange
         await using var context = CreateInMemoryContext();
         var publishMock = new Mock<IPublishEndpoint>();
-        var handler = new CreateOrderHandler(context, publishMock.Object);
+        var handler = CreateHandler(context, publishMock.Object);
         var request = new CreateOrderRequest(name: "Test Order", totalPrice: 100, discount: 10);
 
         // Act
@@ -76,5 +80,24 @@ public class CreateOrderHandlerTests
         publishMock.Verify(
             p => p.Publish(It.IsAny<OrderCreatedEvent>(), It.IsAny<CancellationToken>()),
             Times.Once);
+    }
+    
+    [Theory]
+    [InlineData(100, 150)]  // endirim qiymətdən böyükdür
+    [InlineData(100, -5)]   // mənfi endirim
+    [InlineData(0, 0)]      // qiymət sıfırdır
+    public async Task Handle_ShouldThrow_AndSaveNothing_WhenRequestIsInvalid(int totalPrice, int discount)
+    {
+        await using var context = CreateInMemoryContext();
+        var publishMock = new Mock<IPublishEndpoint>();
+        var handler = CreateHandler(context, publishMock.Object);
+        var request = new CreateOrderRequest(name: "Invalid Order", totalPrice: totalPrice, discount: discount);
+
+        await Assert.ThrowsAsync<ArgumentException>(() => handler.Handle(request, CancellationToken.None));
+
+        Assert.Empty(context.Orders);
+        publishMock.Verify(
+            p => p.Publish(It.IsAny<OrderCreatedEvent>(), It.IsAny<CancellationToken>()),
+            Times.Never);
     }
 }
