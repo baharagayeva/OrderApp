@@ -11,12 +11,17 @@ public class AppDbContext : DbContext
         
     }
     
-    public DbSet<Order> Orders { get; set; }
+    public DbSet<Order> Orders => Set<Order>();
+    public DbSet<DailySalesReport> DailySalesReports => Set<DailySalesReport>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        
+        builder.Entity<DailySalesReport>()
+            .HasIndex(r => r.ReportDate)
+            .IsUnique();
         
         builder.AddInboxStateEntity();
         builder.AddOutboxMessageEntity();

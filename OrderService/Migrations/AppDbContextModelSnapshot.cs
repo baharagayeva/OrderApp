@@ -190,6 +190,34 @@ namespace OrderService.Migrations
                     b.ToTable("OutboxState");
                 });
 
+            modelBuilder.Entity("OrderService.Entities.DailySalesReport", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("GeneratedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("OrderCount")
+                        .HasColumnType("integer");
+
+                    b.Property<DateOnly>("ReportDate")
+                        .HasColumnType("date");
+
+                    b.Property<decimal>("TotalRevenue")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReportDate")
+                        .IsUnique();
+
+                    b.ToTable("DailySalesReports");
+                });
+
             modelBuilder.Entity("OrderService.Entities.Order", b =>
                 {
                     b.Property<int>("Id")

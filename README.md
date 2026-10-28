@@ -6,17 +6,18 @@ An order management API built with **.NET 10** and **ASP.NET Core**. It uses CQR
 
 ## Tech stack
 
-| Area         | Technologies |
-|--------------| --- |
-| API          | ASP.NET Core Web API (.NET 10), Swagger / OpenAPI |
-| Architecture | CQRS with MediatR |
-| Data         | PostgreSQL 16, Entity Framework Core 10, migrations |
+| Area         | Technologies                                                                       |
+|--------------|------------------------------------------------------------------------------------|
+| API          | ASP.NET Core Web API (.NET 10), Swagger / OpenAPI                                  |
+| Architecture | CQRS with MediatR                                                                  |
+| Data         | PostgreSQL 16, Entity Framework Core 10, migrations                                |
 | Messaging    | RabbitMQ, MassTransit 8 (message retry, error queue, EF Core transactional outbox) |
-| Caching      | Redis 7, `IDistributedCache` (cache-aside) |
-| Security     | JWT bearer authentication |
-| Logging      | Serilog, ProblemDetails |
-| DevOps       | Multi-stage Dockerfile, Docker Compose, GitHub Actions CI |
-| Testing      | xUnit, Moq, EF Core InMemory provider |
+| Caching      | Redis 7, `IDistributedCache` (cache-aside)                                         |
+| Security     | JWT bearer authentication                                                          |
+| Observability| Serilog, ProblemDetails, TraceId                                                   |
+| DevOps       | Multi-stage Dockerfile, Docker Compose, GitHub Actions CI                          |
+| Testing      | xUnit, Moq, EF Core InMemory provider     
+Background jobs | Hangfire (PostgreSQL storage, recurring and fire-and-forget jobs)|
 
 ## Architecture
 
@@ -85,6 +86,7 @@ To run the API from an IDE instead, start only the infrastructure with `docker c
 4. **Read it twice.** Call `GET /api/Order/GetOrderById?OrderId=1` two times. The logs show `Cache MISS` and then `Cache HIT`.
 5. **See the retry and error queue.** Create an order whose name contains `fail`, for example `"name": "fail-test"`. The consumer throws on purpose. The logs show attempts 0 to 3, and the message then appears in the `OrderCreated_error` queue in the RabbitMQ management UI.
 6. **See the outbox.** Stop the broker with `docker compose stop rabbitmq` and create an order. The API still succeeds, and the event waits in the `OutboxMessage` table. Start the broker again with `docker compose start rabbitmq` and the event is delivered within a few seconds.
+7. **Generate a report.** Call `POST /api/Report/daily?date=2026-10-28` and open http://localhost:8080/hangfire to see the job run. The nightly `daily-sales-report` recurring job is listed under **Recurring Jobs**.
 
 ## API
 
@@ -93,6 +95,7 @@ To run the API from an IDE instead, start only the infrastructure with `docker c
 | `POST` | `/api/Auth/login?username={name}` | No | Returns a JWT valid for 1 hour |
 | `POST` | `/api/Order/CreateOrder` | Yes | Creates an order and publishes `OrderCreatedEvent` |
 | `GET` | `/api/Order/GetOrderById?OrderId={id}` | Yes | Returns an order, served from Redis when cached |
+| `POST` | `/api/Report/daily?date={yyyy-MM-dd}` | Yes | Queues a Hangfire job that generates the daily sales report for the given date and returns `202 Accepted` with the job ID |
 
 ## Project structure
 

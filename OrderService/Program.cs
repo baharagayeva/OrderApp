@@ -1,4 +1,6 @@
 using System.Text;
+using Hangfire;
+using Hangfire.PostgreSql;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +10,7 @@ using OrderService.Configurations;
 using OrderService.Consumers;
 using OrderService.CQRS.Commands.Requests;
 using OrderService.Infrastructure;
+using OrderService.Jobs;
 using Serilog;
 
 // Konfiqurasiya oxunmamışdan əvvəl baş verən xətaları da yazmaq üçün müvəqqəti logger
@@ -95,6 +98,15 @@ try
         options.Configuration = builder.Configuration.GetConnectionString("Redis");
         options.InstanceName = "OrderService:"; // bütün açarların önünə prefiks əlavə olunur
     });
+    
+    builder.Services.AddHangfire(config => config
+        .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+        .UseSimpleAssemblyNameTypeSerializer()
+        .UseRecommendedSerializerSettings()
+        .UsePostgreSqlStorage(options =>
+            options.UseNpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))));
+
+    builder.Services.AddHangfireServer();   // işləri arxa planda icra edən server
 
     builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
     builder.Services.AddProblemDetails();
@@ -114,6 +126,18 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
+    
+    var dashboardOptions = new DashboardOptions();
+    if (app.Environment.IsDevelopment())
+        dashboardOptions.Authorization = [new DevDashboardAuthorizationFilter()];
+
+    app.UseHangfireDashboard("/hangfire", dashboardOptions);
+
+    app.Services.GetRequiredService<IRecurringJobManager>().AddOrUpdate<DailySalesReportJob>(
+        "daily-sales-report",
+        job => job.RunForYesterdayAsync(),
+        "5 0 * * *",                                      // hər gün 00:05 UTC (Bakı vaxtı ilə 04:05)
+        new RecurringJobOptions { TimeZone = TimeZoneInfo.Utc });
 
     app.Run();
 }
