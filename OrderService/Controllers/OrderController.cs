@@ -22,4 +22,10 @@ public class OrderController(IMediator mediator) : ControllerBase
    {
       return Ok(await mediator.Send(byIdRequest, ct));
    }
+   
+   [HttpGet("GetOrders")]
+   public async Task<IActionResult> GetOrders([FromQuery] GetOrdersRequest request, CancellationToken ct)
+   {
+      return Ok(await mediator.Send(request, ct));
+   }
 }

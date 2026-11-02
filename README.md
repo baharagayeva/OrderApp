@@ -10,14 +10,14 @@ An order management API built with **.NET 10** and **ASP.NET Core**. It uses CQR
 |--------------|------------------------------------------------------------------------------------|
 | API          | ASP.NET Core Web API (.NET 10), Swagger / OpenAPI                                  |
 | Architecture | CQRS with MediatR                                                                  |
-| Data         | PostgreSQL 16, Entity Framework Core 10, migrations                                |
+| Data         | PostgreSQL 16, Entity Framework Core 10, migrations, Dapper (read side)                              |
 | Messaging    | RabbitMQ, MassTransit 8 (message retry, error queue, EF Core transactional outbox) |
 | Caching      | Redis 7, `IDistributedCache` (cache-aside)                                         |
 | Security     | JWT bearer authentication                                                          |
 | Observability| Serilog, ProblemDetails, TraceId                                                   |
 | DevOps       | Multi-stage Dockerfile, Docker Compose, GitHub Actions CI                          |
-| Testing      | xUnit, Moq, EF Core InMemory provider     
-Background jobs | Hangfire (PostgreSQL storage, recurring and fire-and-forget jobs)|
+| Testing      | xUnit, Moq, EF Core InMemory provider                                              |
+| Background jobs | Hangfire (PostgreSQL storage, recurring and fire-and-forget jobs)                  |
 
 ## Architecture
 
@@ -96,6 +96,8 @@ To run the API from an IDE instead, start only the infrastructure with `docker c
 | `POST` | `/api/Order/CreateOrder` | Yes | Creates an order and publishes `OrderCreatedEvent` |
 | `GET` | `/api/Order/GetOrderById?OrderId={id}` | Yes | Returns an order, served from Redis when cached |
 | `POST` | `/api/Report/daily?date={yyyy-MM-dd}` | Yes | Queues a Hangfire job that generates the daily sales report for the given date and returns `202 Accepted` with the job ID |
+| `GET` | `/api/Order/GetOrders?page=1&pageSize=10&minTotal={amount}` | Yes | Returns a page of orders with the total count, queried with Dapper |
+| `GET` | `/api/Report/summary?from={yyyy-MM-dd}&to={yyyy-MM-dd}` | Yes | Returns daily order count and revenue for the date range, aggregated in SQL with Dapper |
 
 ## Project structure
 
